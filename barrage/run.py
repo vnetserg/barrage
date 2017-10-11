@@ -3,7 +3,7 @@
 import sys
 import argparse
 
-def run(TestCases, Answer):
+def run(TestCases):
     parser = argparse.ArgumentParser()
     parser.add_argument("app", help="compoiled executable to test")
     parser.add_argument("app_san", help="compiled executable with sanitizer")
@@ -11,7 +11,7 @@ def run(TestCases, Answer):
     parser.add_argument("-f", "--forever", action="store_true", help="run forever")
     args = parser.parse_args()
 
-    cases = TestCases(Answer, args.app, args.app_san, args.seed)
+    cases = TestCases(args.app, args.app_san, args.seed)
     try:
         if cases.run(args.forever):
             sys.exit(0)

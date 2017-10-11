@@ -14,8 +14,7 @@ class BaseTestCases:
     class TimeLimitError(Exception): pass
     class MemoryLimitError(Exception): pass
 
-    def __init__(self, Answer, app, app_san, seed=None):
-        self.Answer = Answer
+    def __init__(self, app, app_san, seed=None):
         self.app = app
         self.app_san = app_san
         self.seed = seed
@@ -117,18 +116,17 @@ class BaseTestCases:
                     except self.MemoryLimitError:
                         print("\nMEMORY LIMIT EXCEEDED. STDIN:\n{}".format(prob.to_stdin()))
                         return False
-                    if prob.check_answer:
-                        answer_got = self.Answer.from_stdout(stdout)
-                        if not answer_got.validate(prob):
-                            try:
-                                answer_expected = self.Answer.for_problem(prob)
-                            except NotImplemented:
-                                print("\nFAILED. STDIN:\n{}\nGOT:\n{}"
-                                      .format(prob.to_stdin(), stdout))
-                            else:
-                                print("\nFAILED. STDIN:\n{}\nEXPECTED:\n{}\nGOT:\n{}"
-                                      .format(prob.to_stdin(), answer_expected.to_stdout(), stdout))
-                            return False
+                    answer_got = prob.Answer().from_stdout(stdout)
+                    if not prob.validate(answer_got):
+                        try:
+                            answer_expected = prob.Answer().for_problem(prob)
+                        except NotImplementedError:
+                            print("\nFAILED. STDIN:\n{}\nGOT:\n{}"
+                                  .format(prob.to_stdin(), stdout))
+                        else:
+                            print("\nFAILED. STDIN:\n{}\nEXPECTED:\n{}\nGOT:\n{}"
+                                  .format(prob.to_stdin(), answer_expected.to_stdout(), stdout))
+                        return False
                 print("")
             keep_running = forever
             self.seed = random.randrange(100000)

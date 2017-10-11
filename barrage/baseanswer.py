@@ -4,11 +4,11 @@ from .attributed import Attributed
 class BaseAnswer(Attributed):
     @classmethod
     def from_stdout(cls, stdout):
-        raise NotImplemented
+        raise NotImplementedError
 
     @classmethod
     def for_problem(cls, problem):
-        raise NotImplemented
+        raise NotImplementedError
 
     def validate(self, prob):
         return self.for_problem(prob) == self
