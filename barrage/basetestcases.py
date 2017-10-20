@@ -90,6 +90,9 @@ class BaseTestCases:
     def random_array(self, length, lo, hi):
         return [self.random.randrange(lo, hi) for _ in range(length)]
 
+    def random_array_unique(self, length, lo, hi):
+        return self.random.sample(range(lo, hi), length)
+
     def random_array_polarized(self, length, lo, hi):
         array = self.random_array(length, lo, hi)
         return [(x if self.random.randrange(2) else -x) for x in array]
@@ -148,7 +151,7 @@ class BaseTestCases:
                               stdin=subprocess.PIPE, preexec_fn=limit_memory)
         try:
             out, err = sp.communicate(problem.to_stdin().encode("utf-8"), timeout=self.TIME_LIMIT)
-        except TimeoutError:
+        except subprocess.TimeoutExpired:
             sp.kill()
             raise self.TimeLimitError
         out = out.decode("utf-8").strip()
