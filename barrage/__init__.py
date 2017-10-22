@@ -1,3 +1,4 @@
+from .basescorecases import BaseScoreCases
 from .basetestcases import BaseTestCases
 from .baseproblem import BaseProblem
 from .baseanswer import BaseAnswer

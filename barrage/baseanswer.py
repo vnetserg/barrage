@@ -10,6 +10,9 @@ class BaseAnswer(Attributed):
     def for_problem(cls, problem):
         raise NotImplementedError
 
+    def score_against(self, perfect):
+        raise NotImplementedError
+
     def validate(self, prob):
         return self.for_problem(prob) == self
 

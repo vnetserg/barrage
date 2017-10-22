@@ -1,3 +1,6 @@
+# Vi files
+*.swp
+
 # Files with test configuration
 templates
 templates/*
