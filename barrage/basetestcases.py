@@ -11,10 +11,10 @@ class BaseTestCases(BaseLauncher):
                     answer_expected = prob.Answer().for_problem(prob)
                 except NotImplementedError:
                     print("\nFAILED. STDIN:\n{}\nGOT:\n{}"
-                          .format(prob.to_stdin(), stdout))
+                          .format(prob.to_stdin(), answer_got.to_stdout()))
                 else:
                     print("\nFAILED. STDIN:\n{}\nEXPECTED:\n{}\nGOT:\n{}"
-                          .format(prob.to_stdin(), answer_expected.to_stdout(), stdout))
+                          .format(prob.to_stdin(), answer_expected.to_stdout(), answer_got.to_stdout()))
                 return False
         print("")
         return True
