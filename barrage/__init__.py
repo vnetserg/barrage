@@ -8,3 +8,4 @@ case = BaseTestCases.case
 repeat = BaseTestCases.repeat
 forin = BaseTestCases.forin
 nochecks = BaseTestCases.nochecks
+validate_only = BaseTestCases.validate_only

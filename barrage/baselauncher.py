@@ -66,6 +66,17 @@ class BaseLauncher:
         return cls.case(wrapper, cls.get_test_name(fun))
 
     @classmethod
+    def validate_only(cls, fun):
+        gen = cls.value_to_list(fun)
+        def wrapper(*args, **kw):
+            res = gen(*args, **kw)
+            for prob in res:
+                prob.validate_only = True
+                prob.sanitize = False
+            return res
+        return cls.case(wrapper, cls.get_test_name(fun))
+
+    @classmethod
     def value_to_list(cls, fun):
         def wrapper(*args, **kw):
             res = fun(*args, **kw)
@@ -95,6 +106,9 @@ class BaseLauncher:
     def random_array_polarized(self, length, lo, hi):
         array = self.random_array(length, lo, hi)
         return [(x if self.random.randrange(2) else -x) for x in array]
+
+    def random_string(self, length, characters):
+        return "".join(self.random.choice(characters) for _ in range(length))
 
     def run(self, forever=False):
         keep_running = True

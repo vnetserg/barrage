@@ -7,6 +7,10 @@ class BaseTestCases(BaseLauncher):
             if not answer_got:
                 return False
             if not prob.validate(answer_got):
+                if prob.validate_only:
+                    print("\nFAILED. STDIN:\n{}\nGOT:\n{}"
+                          .format(prob.to_stdin(), answer_got.to_stdout()))
+                    return False
                 try:
                     answer_expected = prob.Answer().for_problem(prob)
                 except NotImplementedError:

@@ -11,6 +11,7 @@ class BaseProblem(Attributed):
             self.answer = kw.pop("answer", None)
         self.check_answer = kw.pop("check_answer", True)
         self.sanitize = kw.pop("sanitize", True)
+        self.validate_only = kw.pop("validate_only", False)
         super().__init__(*args, **kw)
 
     def to_stdin(self):
